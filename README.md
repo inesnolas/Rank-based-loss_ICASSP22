@@ -25,7 +25,7 @@ This repo contains:
 5. Compute the loss following equation above.
 
 An example from the task of individual identification of animals: we assume the following hirarchical label structure:
-![hierarchical_label_tree](https://user-images.githubusercontent.com/33712250/137123163-6b2c21c2-a6ab-40d8-9a68-46781b31b7af.png)
+![hierarchical_labels_tree](https://user-images.githubusercontent.com/33712250/137140261-5ad84e7f-1d31-4f95-8501-dd105c7b6439.png)
 given a batch of examples, we can compute the RbL by following the 5 steps above:
 ![compute_RBL_example](https://user-images.githubusercontent.com/33712250/137123161-1b7c4eef-9b5e-4d79-bec5-d3892bec2382.png)
 
