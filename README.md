@@ -14,9 +14,20 @@ This repo contains:
 - example_data: necessary data to run example. data are precomputed Vggish embeddings and are normalized based on the training set. (see paper for more details)
 - SingleLayer_net.py: Network architecture class.
 - data_functions.py: Dataset class.
-- evaluation.py: the evaluation is based on the Silhouette score metric from sklearn: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html
+- evaluation.py: the evaluation is based on the [Silhouette score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html) metric from sklearn: 
 
 ### Computing the rank based loss:
 
-### Some results:
+1. Compute a rank map from the tree of ground truth labels: Each pair of examples has a rank given by the tree distance of their labels. The tree distance is given by the number of nodes that separate the two labels
+2. Compute all the pairwise cosine distances in the batch in the embedding space, and sort them. 
+3. For each rank, assign a target distance by selecting whatever distance in the sorted distances vector falls at each rank.
+4. Compute **Ip** as: 0 if distance of the pair is within the correct positions in the sorted distances vector, else 1 if distance of the pair is wrong given the ground truth rank.
+5. Compute the loss following equation above.
 
+An example from the task of individual identification of animals: we assume the following hirarchical label structure:
+![hierarchical_label_tree](https://user-images.githubusercontent.com/33712250/137123163-6b2c21c2-a6ab-40d8-9a68-46781b31b7af.png)
+given a batch of examples, we can compute the RbL by following the 5 steps above:
+![compute_RBL_example](https://user-images.githubusercontent.com/33712250/137123161-1b7c4eef-9b5e-4d79-bec5-d3892bec2382.png)
+
+
+### Some results:
