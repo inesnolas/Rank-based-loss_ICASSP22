@@ -1,13 +1,13 @@
 
 import torch
 import itertools
-import matplotlib as plt
 from torch.nn.functional import embedding
 import numpy as np
-import wandb
+# import wandb
 import evaluation as ev
 import itertools
 import tqdm
+import os
 
 def compute_pair_gt_tree_distance(labels_pair_one, labels_pair_two, number_of_ranks ):  
     # TODO generalize function for n levels in hierarchy, hardcoded 2 and 3 levels only
@@ -91,9 +91,9 @@ def compute_rank_based_loss(batch_size, minibatch_embedding_coordinates, minibat
     number_pairs = pairs_indexes.shape[0]
     
     #1 Pairwise embedding distances:
-    if distance = 'euclidean':
+    if distance == 'euclidean':
         embedding_pairwise_distances = compute_pairwise_euclidean_distances(torch.transpose(minibatch_embedding_coordinates,0,1).to(device), minibatch_embedding_coordinates.shape[1], batch_size )
-    elif distance = 'cosine':
+    elif distance == 'cosine':
         embedding_pairwise_distances = compute_pairwise_cosine_distances(minibatch_embedding_coordinates.to(device))
 
     count_samples_in_each_rank = torch.sum(minibatch_rank_map, 1).reshape(number_of_ranks+1,1)
@@ -205,7 +205,7 @@ def train_RbL(model, training_generator, validation_generator, output_folder, ea
                 val_labels_every_epoch = np.concatenate((val_labels_every_epoch, np.asarray(y_val)))
                        
                 minibatch_rank_map_val, _ =pre_compute_rank_map(number_of_ranks, hierarchical_labels=y_val )
-                val_loss, _, _, _ = compute_rank_based_loss(embeddings_val.shape[0], embeddings_val, y_val, minibatch_rank_map_val, number_of_ranks) #log_probs, y_batch)
+                val_loss, _, _, _ = compute_rank_based_loss(embeddings_val.shape[0], embeddings_val, y_val, minibatch_rank_map_val, number_of_ranks, distance) #log_probs, y_batch)
                 valid_losses.append(val_loss.item())
 
             val_embeddings_every_epoch =  np.delete(val_embeddings_every_epoch, range(configs['BATCH_SIZE']), 0)
@@ -222,7 +222,7 @@ def train_RbL(model, training_generator, validation_generator, output_folder, ea
         train_loss = np.average(train_losses)
         val_loss = np.average(valid_losses)
         
-        wandb.log({"training_loss": train_loss, "val_loss": val_loss, "Train_silhouette_score_IDlabels": train_clusters_score_IDlabels, "Train_silhouette_score_SPECIESlabels": train_clusters_score_SPECIESlabels, "VAL_silhouette_score_IDlabels": val_clusters_score_IDlabels, "VAL_silhouette_score_SPECIESlabels": val_clusters_score_SPECIESlabels, "VAL_averaged_silhouette_scores": avg_sils})         
+        # wandb.log({"training_loss": train_loss, "val_loss": val_loss, "Train_silhouette_score_IDlabels": train_clusters_score_IDlabels, "Train_silhouette_score_SPECIESlabels": train_clusters_score_SPECIESlabels, "VAL_silhouette_score_IDlabels": val_clusters_score_IDlabels, "VAL_silhouette_score_SPECIESlabels": val_clusters_score_SPECIESlabels, "VAL_averaged_silhouette_scores": avg_sils})         
         print("Epoch", epoch, ", Loss:",round(train_loss,3), "Val_loss:", round(val_loss,3), "silhouete_score_ID_labels:", train_clusters_score_IDlabels, "silhouette_score_species_labels", train_clusters_score_SPECIESlabels, "VAL_silhouette_score_IDlabels", val_clusters_score_IDlabels, "VAL_silhouette_score_SPECIESlabels", val_clusters_score_SPECIESlabels, "VAL_averaged_silhouette_scores:",  avg_sils)
     
         if avg_sils > best_avg_sils:
@@ -242,7 +242,7 @@ def train_RbL(model, training_generator, validation_generator, output_folder, ea
             temporary_best_checkpoint = os.path.join(output_folder, "Checkpoint" + '_epoch' + str(epoch) + '_valloss' + str(round(val_loss,2)) + '_val_avg_sils' + str(round(avg_sils,2)) +'.pt')
             print("Saving parameters to", temporary_best_checkpoint)
             torch.save(checkpoint, temporary_best_checkpoint)
-            torch.save(model.state_dict(), os.path.join(wandb.run.dir, 'model.pt'))
+            # torch.save(model.state_dict(), os.path.join(wandb.run.dir, 'model.pt'))
         
         # EARLY STOPPING :
         if epoch > best_avg_sils_epoch + early_stopping_patience :

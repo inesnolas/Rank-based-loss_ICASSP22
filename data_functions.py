@@ -2,6 +2,7 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
+import os
 
 class RankBasedLossHierarchicalLabelsEmbeddings(Dataset):
     def __init__(self, partition_dataframe, features_folder, target_labels='hierarchical_labels'):
