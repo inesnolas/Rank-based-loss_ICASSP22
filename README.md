@@ -14,7 +14,7 @@ This repo contains:
 - example_data: necessary data to run example. data are precomputed Vggish embeddings and are normalized based on the training set. (see paper for more details)
 - SingleLayer_net.py: Network architecture class.
 - data_functions.py: Dataset class.
-- evaluation.py: the evaluation is based on the [Silhouette score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html) metric from sklearn: 
+- evaluation.py: the evaluation is based on the [Silhouette score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html) metric from sklearn.
 
 ### Computing the rank based loss:
 
@@ -24,16 +24,34 @@ This repo contains:
 4. Compute **Ip** as: 0 if distance of the pair is within the correct positions in the sorted distances vector, else 1 if distance of the pair is wrong given the ground truth rank.
 5. Compute the loss following equation above.
 
+
+
 An example from the task of individual identification of animals: we assume the following hirarchical label structure:
 ![hierarchical_labels_tree](https://user-images.githubusercontent.com/33712250/137140261-5ad84e7f-1d31-4f95-8501-dd105c7b6439.png)
-given a batch of examples, we can compute the RbL by following the 5 steps above:
+given a minibatch of examples, we can compute the RbL by following the 5 steps above:
 ![compute_RBL_example](https://user-images.githubusercontent.com/33712250/137123161-1b7c4eef-9b5e-4d79-bec5-d3892bec2382.png)
 
 
 ### Some results:
 
-1) does it converge? and does that mean identifiable clusters? (RbL experiments with scatter plots of the embeddings)
-2) how does it relate with Quadruplet loss?
-3) rbl uncontrained, does it show more flexibility regarding the examples in the batch?
-4) 
 
+
+
+![g4179](https://user-images.githubusercontent.com/33712250/137938178-fd05a7ea-636a-46f1-8891-fddf936d7160.png)
+
+
+
+
+<!-- Visualization of the embeddings obtained by RbL and how these evolve during training:
+Colored by animal ID
+https://user-images.githubusercontent.com/33712250/137915325-0f795074-a716-47dc-a1ce-ac9fc56aa3df.mp4
+
+Colored by species:
+https://user-images.githubusercontent.com/33712250/137915587-f5ba2418-731f-4bd4-b7e3-474cc239468b.mp4 -->
+
+
+<!-- 3) how does it relate with Quadruplet loss?
+4) rbl uncontrained, does it show more flexibility regarding the examples in the batch?
+5) 
+
+ -->
