@@ -31,3 +31,9 @@ given a batch of examples, we can compute the RbL by following the 5 steps above
 
 
 ### Some results:
+
+1) does it converge? and does that mean identifiable clusters? (RbL experiments with scatter plots of the embeddings)
+2) how does it relate with Quadruplet loss?
+3) rbl uncontrained, does it show more flexibility regarding the examples in the batch?
+4) 
+
