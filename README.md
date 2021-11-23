@@ -34,12 +34,63 @@ given a minibatch of examples, we can compute the RbL by following the 5 steps a
 
 ### Some results:
 
-
-
-
+<!-- 
 ![g4179](https://user-images.githubusercontent.com/33712250/137938178-fd05a7ea-636a-46f1-8891-fddf936d7160.png)
+ -->
 
 
+**InitEmb** Evaluation of initial pretrained embeddings: This serves the purpose of defining a baseline for comparison with all other experiments. The main goal is to understand if an improvement over the initial embeddings is achieved or not. % the purpose is to understand if the "quality" of the initial embeddings impacts the performance of the Rank based loss.
+
+**QuadL** Comparison against Quadruplet Loss: The quadruplet loss of  [] is especially relevant to compare with the rank based loss. As  mentioned in sec.\ref{sec:intro}, this loss integrates hierarchical information through selection of the examples that generate the quadruplets.
+
+**RbL** Rank based loss: Training the network with the RbL on the 3 datasets. batch size is 12 and the examples are selected to create a balanced batch across ranks.
+
+**RbL_unc** Unconstrained batches: On all the previous experiments the batches are balanced regarding the hierarchical relationships between ground truth labels. Here that constraint is lifted, allowing, for example, batches to be missing pairs of one rank or have a disproportional number of pairs in another.
+
+**RbL_RdmHierarchy** By randomly re-arranging the hierarchy of the problem we can evaluate if the RbL is indeed performing better than non-hierarchical approaches **(InitEmb)** due to using the hierarchical relationship information or simply because the problem at each level becomes smaller and thus easier to solve (like a divide and conquer approach).  We expect if the first case, that the Sil values obtained on this randomized label structure to be very bad, on the other hand, if it is a purely divide and conquer approach that is giving the improved scores then we would expect a Sil values to stay at the same values as the experiments in **RbL**
+
+
+
+
+
+3 Bird Species Dataset:
+
+|   						 | Sil Fine | Sil Coarse | avg Sil |
+| ---      | ---      | ---								|---						|
+| **InitEmb**| -0.23 (0.0)	|	0.31	(0.0)		|0.04 (0.0)	|
+| **QuadL**  | -0.17 (+0.06)| 0.31 (0.0)  |0.07 (+0.03)|
+| **RbL**				| -0.08 (+0.15)| 0.42 (+0.11)|0.17 (+0.13)|
+| **RbL_unc**| -0.22 (+0.01)|	0.22 (-0.09)|0.0 (+0.04) |
+| **RbL_RdmHierarchy**| -0.15 (+0.08) | -0.09	(-0.41)	 |	-0.12 (-0.16)|
+
+
+
+Nsynth Dataset:
+
+
+|   						 | Sil Fine | Sil Coarse | avg Sil |
+| ---      | ---      | ---								|---		|
+| **InitEmb**| -0.04 (0.0)|	0.65 (0.0) | 0.31 (0.0)	|
+| **QuadL**  | 0.01 (+0.05)| 0.6 (-0.05)|	0.31 (0.0)|
+| **RbL**				| -0.08 (-0.04)| 0.46 (-0.19)| 0.19 (-0.12)
+| **RbL_unc**|-0.16 (-0.12) |	0.38 (-0.27)	|0.11 (-0.2) |
+
+
+
+TUTasc2016 Dataset:
+
+
+|   						 | Sil Fine | Sil Coarse | avg Sil |
+| ---      | ---      | ---								|---		|
+| **InitEmb**| 0.3 (0.0)  | 0.57 (0.0) |0.43 (0.0)|
+| **QuadL**  | -0.19 (-0.5)	| 0.14 (-0.43) | -0.02	(-0.45) |
+| **RbL**				| 0.03 (-0.27) | 0.59 (+ 0.02) | 0.31 (-0.12) |
+| **RbL_unc**|  0.14 (-0.15)	|	0.67 (+0.1)	 | 0.41 (-0.02)|
+
+
+
+
+<!-- #### embeddings visualization:  -->
 
 
 <!-- Visualization of the embeddings obtained by RbL and how these evolve during training:
