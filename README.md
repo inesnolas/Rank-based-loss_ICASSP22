@@ -14,7 +14,32 @@ This repo contains:
 - example_data: necessary data to run example. data are precomputed Vggish embeddings and are normalized based on the training set. (see paper for more details)
 - SingleLayer_net.py: Network architecture class.
 - data_functions.py: Dataset class.
+- distance_functions.py: helping functions to compute distances.
 - evaluation.py: the evaluation is based on the [Silhouette score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html) metric from sklearn.
+
+
+```
+└── Rank-based-loss_ICASSP22
+    ├── example_data
+    |   ├── Normalized_VGGish_embeddings_based_on_Training_Set/
+    │   ├── val.csv
+    │   ├── test.csv
+    │   └── train.csv
+    ├── loss_fuctions
+    │   ├── quadruplet_loss.py
+    │   └── rank_based_loss.py
+    ├── models
+    │   ├── SingleLayer_net.py
+    │   ├── pretrained_models/
+    ├── utils
+    │   ├── data_functions.py
+    │   ├── evaluation.py
+    │   └── distance_functions.py
+    ├── LICENCE.md
+    ├── README.md
+    ├── requirements.txt
+    └── run_example.py
+ ```
 
 ### Computing the rank based loss:
 
