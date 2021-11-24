@@ -1,8 +1,8 @@
-import SingleLayer_net as single_layer
-import rank_based_loss as rbl
+import models.SingleLayer_net as single_layer
+import loss_functions.rank_based_loss as rbl
 # import wandb
 import torch
-import data_functions as df
+import utils.data_functions as df
 import os
 import json
 import pandas as pd

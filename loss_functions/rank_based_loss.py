@@ -4,7 +4,8 @@ import itertools
 from torch.nn.functional import embedding
 import numpy as np
 # import wandb
-import evaluation as ev
+import utils.distance_functions as dist
+import utils.evaluation as ev
 import itertools
 import tqdm
 import os
@@ -52,34 +53,34 @@ def pre_compute_rank_map(number_of_ranks, hierarchical_labels):
     return rank_map, pair_rank
 
 
-def compute_pairwise_cosine_distances(minibatch_embeddings, full_matrix=False):
-    # cosine_distance = 1 - cosine_similarity
-    # cosine similarity (A,B)= cos(theta) =  (A . B ) / (||A||*||B||) , 
-    # constrainining embeddings into a hypersphere (unit-sphere) so all norms are 1 reduces this to a matrix multiplication (A.B)
+# def compute_pairwise_cosine_distances(minibatch_embeddings, full_matrix=False):
+#     # cosine_distance = 1 - cosine_similarity
+#     # cosine similarity (A,B)= cos(theta) =  (A . B ) / (||A||*||B||) , 
+#     # constrainining embeddings into a hypersphere (unit-sphere) so all norms are 1 reduces this to a matrix multiplication (A.B)
 
-    D = 1 - torch.mm(minibatch_embeddings, torch.transpose(minibatch_embeddings, 0, 1))
-    if not full_matrix:
-        tri_idx = torch.triu_indices(minibatch_embeddings.shape[0],minibatch_embeddings.shape[0],1)
-        pairwise_dist_vector = D[tri_idx[0],tri_idx[1]]
-        return pairwise_dist_vector
-    else:
-        return D
+#     D = 1 - torch.mm(minibatch_embeddings, torch.transpose(minibatch_embeddings, 0, 1))
+#     if not full_matrix:
+#         tri_idx = torch.triu_indices(minibatch_embeddings.shape[0],minibatch_embeddings.shape[0],1)
+#         pairwise_dist_vector = D[tri_idx[0],tri_idx[1]]
+#         return pairwise_dist_vector
+#     else:
+#         return D
 
 
-def compute_pairwise_euclidean_distances(minibatch_embeddings, d, n, full_matrix=False ):
-    # as per https://www.robots.ox.ac.uk/~albanie/notes/Euclidean_distance_trick.pdf alg.1
+# def compute_pairwise_euclidean_distances(minibatch_embeddings, d, n, full_matrix=False ):
+#     # as per https://www.robots.ox.ac.uk/~albanie/notes/Euclidean_distance_trick.pdf alg.1
     
-    X_view1 = minibatch_embeddings.reshape(d, n, 1)   
-    X_view2 = minibatch_embeddings.reshape(d,1,n)
+#     X_view1 = minibatch_embeddings.reshape(d, n, 1)   
+#     X_view2 = minibatch_embeddings.reshape(d,1,n)
 
-    diff_mat = X_view1-X_view2
-    D = torch.sum(diff_mat**2,dim=0)
-    if not full_matrix:
-        tri_idx = torch.triu_indices(n,n,1)
-        pairwise_dist_vector = D[tri_idx[0],tri_idx[1]]
-        return torch.sqrt(pairwise_dist_vector)
-    else :
-        return torch.sqrt(D)
+#     diff_mat = X_view1-X_view2
+#     D = torch.sum(diff_mat**2,dim=0)
+#     if not full_matrix:
+#         tri_idx = torch.triu_indices(n,n,1)
+#         pairwise_dist_vector = D[tri_idx[0],tri_idx[1]]
+#         return torch.sqrt(pairwise_dist_vector)
+#     else :
+#         return torch.sqrt(D)
 
 
 
@@ -92,9 +93,9 @@ def compute_rank_based_loss(batch_size, minibatch_embedding_coordinates, minibat
     
     #1 Pairwise embedding distances:
     if distance == 'euclidean':
-        embedding_pairwise_distances = compute_pairwise_euclidean_distances(torch.transpose(minibatch_embedding_coordinates,0,1).to(device), minibatch_embedding_coordinates.shape[1], batch_size )
+        embedding_pairwise_distances = dist.compute_pairwise_euclidean_distances(torch.transpose(minibatch_embedding_coordinates,0,1).to(device), minibatch_embedding_coordinates.shape[1], batch_size )
     elif distance == 'cosine':
-        embedding_pairwise_distances = compute_pairwise_cosine_distances(minibatch_embedding_coordinates.to(device))
+        embedding_pairwise_distances = dist.compute_pairwise_cosine_distances(minibatch_embedding_coordinates.to(device))
 
     count_samples_in_each_rank = torch.sum(minibatch_rank_map, 1).reshape(number_of_ranks+1,1)
 
