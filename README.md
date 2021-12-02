@@ -76,7 +76,7 @@ given a minibatch of examples, we can compute the RbL by following the 5 steps a
 
 
 
-
+The values reported are obtained by applying the trained models on a test set consisting of un-used data from the same fine level classes of the training set. 
 
 3 Bird Species Dataset:
 
@@ -111,8 +111,45 @@ TUTasc2016 Dataset:
 | **QuadL**  | -0.19 (-0.5)	| 0.14 (-0.43) | -0.02	(-0.45) |                 |                   |                    
 | **RbL**	 | 0.03 (-0.27) | 0.59 (+ 0.02) | 0.31 (-0.12) | 0.53             | 0.87                 |
 | **RbL_unc**|  0.14 (-0.15)	|	0.67 (+0.1)	 | 0.41 (-0.02)|    |                   |                    
-| **RbL_RdmHierarchy**| -0.32 (-0.62) | -0.1 (-0.67)	 |	 -0.21 (-0.64)| |                   |                    
+| **RbL_RdmHierarchy**| -0.32 (-0.62) | -0.1 (-0.67)| -0.21 (-0.64)     |     |                 |                    
 
+
+Results on testset consisting on unseen leaf level classes during training:
+
+3 Bird Species Dataset:
+
+|   		        | Sil Fine      | Sil Coarse    | avg Sil       | acc Fine KNN k=17 | acc Coarse KNN k=17|
+| ---               | ---           | ---	        |---			|---		        |---                 |
+| **InitEmb**       | -0.17 (0.0)   |	0.49 (0.0)	|0.16 (0.0)	    |   |     |
+| **QuadL**         | -0.07 (+0.1) | 0.57 (+0.08)    |0.25 (+0.09)   |   |   |
+| **RbL**			| -0.05 (+0.12) | 0.48 (-0.01)  |0.22 (+0.06)   |            |             |
+| **RbL_unc**       | -0.19 (-0.02) |	0.32 (-0.17)|0.07 (-0.09)    |   |   |
+| **RbL_RdmHierarchy**|   |  |  |   |   |
+
+
+
+Nsynth Dataset:
+
+
+|   						 | Sil Fine | Sil Coarse | avg Sil | acc Fine KNN k=17 | acc Coarse KNN k=17|
+| ---                        | ---           | ---	        |---			|---		        |---         |
+| **InitEmb**| -0.14 (0.0)|	0.11 (0.0) | -0.02 (0.0)	|
+| **QuadL**  | -0.09 (+0.05)| -0.02 (-0.13)|	-0.06 (-0.04)| |    |
+| **RbL**	 | -0.04 (+0.1)| 0.13 (+0.02)| 0.05 (+0.07) | |  |
+| **RbL_unc**|-0.33 (-0.19) |	0.06 (-0.05)	|-0.14 (-0.12) |
+| **RbL_RdmHierarchy**      |            | 	         |      	|                |                      |
+
+
+TUTasc2016 Dataset:
+
+
+|   		 | Sil Fine   | Sil Coarse    | avg Sil       | acc Fine KNN k=17 | acc Coarse KNN k=17|
+| ---        | ---        | ---	          |---			  |---		          |---                    |
+| **InitEmb**| 0.7 (0.0)  | 0.59 (0.0)    |0.65 (0.0)     |                   |                    |                    
+| **QuadL**  | 0.14 (-0.56)	| 0.27 (-0.32) | 0.21	(-0.44) |                 |                   |                    
+| **RbL**	 | 0.15 (-0.55) | 0.8 (+0.21) | 0.48 (-0.17) |         |               |
+| **RbL_unc**| 	0.2 (-0.5)	 | 0.74 (+0.15)|  0.47 (-0.18)|  |                   |                    
+| **RbL_RdmHierarchy**| | 	 |	| |                   |                    
 
 
 <!-- #### embeddings visualization:  -->
