@@ -93,7 +93,7 @@ The values reported are obtained by applying the trained models on a test set co
 Nsynth Dataset:
 
 
-|   						 | Sil Fine | Sil Coarse | avg Sil | acc Fine KNN k=17 | acc Coarse KNN k=17|
+|   						 | Sil Fine | Sil Coarse | avg Sil | acc Fine KNN | acc Coarse KNN |
 | ---               | ---           | ---	        |---			|---		        |---         |
 | **InitEmb**| -0.04 (0.0)|	0.65 (0.0) | 0.31 (0.0)	| 0.95 k=1 | 1.0 |
 | **QuadL**  | 0.01 (+0.05)| 0.6 (-0.05)|	0.31 (0.0)| 0.71 k=34 | 0.96 |
@@ -118,7 +118,7 @@ Results on testset consisting on unseen leaf level classes during training:
 
 3 Bird Species Dataset:
 
-|   		        | Sil Fine      | Sil Coarse    | avg Sil       | acc Fine KNN k=17 | acc Coarse KNN k=17|
+|   		        | Sil Fine      | Sil Coarse    | avg Sil       | acc Fine KNN | acc Coarse KNN|
 | ---               | ---           | ---	        |---			|---		        |---                 |
 | **InitEmb**       | -0.17 (0.0)   |	0.49 (0.0)	|0.16 (0.0)	    |   |     |
 | **QuadL**         | -0.07 (+0.1) | 0.57 (+0.08)    |0.25 (+0.09)   |   |   |
@@ -131,7 +131,7 @@ Results on testset consisting on unseen leaf level classes during training:
 Nsynth Dataset:
 
 
-|   						 | Sil Fine | Sil Coarse | avg Sil | acc Fine KNN k=17 | acc Coarse KNN k=17|
+|   						 | Sil Fine | Sil Coarse | avg Sil | acc Fine KNN  | acc Coarse KNN |
 | ---                        | ---           | ---	        |---			|---		        |---         |
 | **InitEmb**| -0.14 (0.0)|	0.11 (0.0) | -0.02 (0.0)	|
 | **QuadL**  | -0.09 (+0.05)| -0.02 (-0.13)|	-0.06 (-0.04)| |    |
@@ -143,7 +143,7 @@ Nsynth Dataset:
 TUTasc2016 Dataset:
 
 
-|   		 | Sil Fine   | Sil Coarse    | avg Sil       | acc Fine KNN k=17 | acc Coarse KNN k=17|
+|   		 | Sil Fine   | Sil Coarse    | avg Sil       | acc Fine KNN  | acc Coarse KNN |
 | ---        | ---        | ---	          |---			  |---		          |---                    |
 | **InitEmb**| 0.7 (0.0)  | 0.59 (0.0)    |0.65 (0.0)     |                   |                    |                    
 | **QuadL**  | 0.14 (-0.56)	| 0.27 (-0.32) | 0.21	(-0.44) |                 |                   |                    
